@@ -1,0 +1,45 @@
+[{
+  "_id": {
+    "$oid": "67274fcb2acd40d95f9e08a3"
+  },
+  "rank": "солдат",
+  "name": "Олександр ",
+  "ageGroup": "1",
+  "exercise3Result": "11:51",
+  "exercise3": "C",
+  "exercise14Result": "4",
+  "exercise14": "Fx",
+  "exercise20Result": "5",
+  "exercise20": "A",
+  "exercise25Result": "11",
+  "exercise25": "A",
+  "exercise6aResult": "40"
+},
+{
+  "_id": {
+    "$oid": "6727907e2acd40d95f9e08a6"
+  },
+  "rank": "ст. солдат",
+  "name": "Вася",
+  "ageGroup": "4",
+  "exercise3Result": "12:40",
+  "exercise3": "E",
+  "exercise14Result": "12",
+  "exercise14": "A",
+  "exercise20Result": "3",
+  "exercise20": "C",
+  "exercise25Result": "12",
+  "exercise25": "C",
+  "exercise6aResult": "30"
+},
+{
+  "_id": {
+    "$oid": "67441e83e7b100dc88c6fc98"
+  },
+  "rank": "солдат",
+  "name": "Сергій",
+  "ageGroup": "3",
+  "exercise3Result": "Хв",
+  "exercise3": "Не з'явився",
+  "exercise6aResult": "40"
+}]

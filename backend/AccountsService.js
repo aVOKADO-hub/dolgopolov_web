@@ -1,18 +1,21 @@
 import Account from './AccountsScheme.js'
 
 class AccountsService{
-    async createAccount(login,password,isAdmin){
-        const newAccount = await Account.create({login,password,isAdmin})
-        return newAccount
-    }
-    async validate(account){
-        console.log(account)
-        if(!account){
-            throw new Error ('Login or password wrong')
-        }
-        const post = await Account.findOne(account)
-        return post
-    }
+    async createAccount(login, password, isAdmin) {
+    const newAccount = await Account.create({ login, password, isAdmin });
+    return newAccount;
+}
+
+    
+async validate(credentials) {
+    const user = await Account.findOne({
+        login: credentials.login,
+        password: credentials.password
+    });
+
+    return user ? user.toObject() : null; 
+}
+
 }
 
 export default new AccountsService()

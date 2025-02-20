@@ -107,22 +107,73 @@ class PostService {
         return result;
     }
     async export(collectionName) {
-        await this.connect();
-        const db = this.connection.connection.db;
-        const documents = await db.collection(collectionName).find().toArray();
+    await this.connect();
+    const db = this.connection.connection.db;
+    const documents = await db.collection(collectionName).find().toArray();
 
-        const workbook = xlsx.utils.book_new('test.xls');
-        const worksheet = xlsx.utils.json_to_sheet(documents, {
-            header: ['responsible_person','rank', 'itemName', 'category', 'quantity', 'unit', 'serialNumber'],
-            skipHeader: false
-        });
-        xlsx.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+    const fieldLabels = {
+        rank: 'Звання',
+        name: 'ПІБ',
+        ageGroup: 'Вікова група',
+        exercise3: '3 км',
+        exercise3Result: 'Результат 3 км',
+        exercise14: 'Підтягування',
+        exercise14Result: 'Результат підтягування',
+        exercise20: 'КСВ',
+        exercise20Result: 'Результат КСВ',
+        exercise25: '100 м',
+        exercise25Result: 'Результат 100 м',
+        exercise6a: 'Згинання та розгинання рук в упорі лежачи',
+        exercise6aResult: 'Результат в упорі лежачи',
+        exercise9: 'Біг на 2 км',
+        exercise9Result: 'Результат 2 км',
+        exercise10: 'Біг на 1 км',
+        exercise10Result: 'Результат 1 км',
+        exercise11: 'Згинання та розгинання тулуба',
+        exercise11Result: 'Результат прес'
+    };
 
-        const outputFilePath = path.join( 'test.xlsx');
-        xlsx.writeFile(workbook, outputFilePath);
-        
-        return { fs, outputFilePath };
-    }
+    const headers = [
+        'rank',
+        'name',
+        'exercise3Result',
+        'exercise3',
+        'exercise14Result',
+        'exercise14',
+        'exercise20Result',
+        'exercise20',
+        'exercise25Result',
+        'exercise25',
+        'exercise6aResult',
+        'exercise6a',
+        'exercise9Result',
+        'exercise9',
+        'exercise10Result',
+        'exercise10',
+        'exercise11Result',
+        'exercise11'
+    ];
+
+    // Map headers to Ukrainian labels
+    const headerTranslations = headers.map(field => fieldLabels[field] || field);
+
+    const worksheet = xlsx.utils.json_to_sheet(documents, {
+        header: headers,
+        skipHeader: true // Avoid default header generation
+    });
+
+    // Add Ukrainian labels as the first row (manually set headers)
+    xlsx.utils.sheet_add_aoa(worksheet, [headerTranslations], { origin: "A1" });
+
+    const workbook = xlsx.utils.book_new();
+    xlsx.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+
+    const outputFilePath = path.join('test.xlsx');
+    xlsx.writeFile(workbook, outputFilePath);
+
+    return { fs, outputFilePath };
+}
+
 }
 
 export default new PostService();
